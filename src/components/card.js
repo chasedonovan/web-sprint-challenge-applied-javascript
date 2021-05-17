@@ -1,5 +1,8 @@
-const Card = (article) => {
-  // TASK 5
+
+
+import axios from 'axios';
+
+// TASK 5
   // ---------------------
   // Implement this function, which should return the markup you see below.
   // It takes as its only argument an "article" object with `headline`, `authorPhoto` and `authorName` properties.
@@ -17,7 +20,38 @@ const Card = (article) => {
   //   </div>
   // </div>
   //
-}
+//
+  const Card = ({headline, authorPhoto, authorName}) => {
+//creates LM-ants
+    const card = document.createElement('div');
+    const head = document.createElement('div');
+    const author = document.createElement("div");
+    const imgcontainer = document.createElement("div");
+    const image = document.createElement("img");
+    const name = document.createElement("span");
+//add style and clss
+    card.classList.add('card');
+    head.classList.add("headline");
+    author.classList.add("author");
+    imgcontainer.classList.add("img-container");
+  //add content
+    head.textContent = headline;
+    image.src = authorPhoto;
+    name.textContent = authorName;
+  //organize
+    card.appendChild(head);
+    card.appendChild(author);
+    author.appendChild(imgcontainer);
+    imgcontainer.appendChild(image);
+    author.appendChild(name);
+  //add listener
+  card.addEventListener("click", () => console.log(headline));
+ // return LM-ant
+  return card
+  }
+
+
+
 
 const cardAppender = (selector) => {
   // TASK 6
@@ -28,6 +62,21 @@ const cardAppender = (selector) => {
   // Create a card from each and every article object in the response, using the Card component.
   // Append each card to the element in the DOM that matches the selector passed to the function.
   //
+
+
+  // get the object
+  const main = document.querySelector(selector);
+  // get the data 
+    axios
+    .get("https://lambda-times-api.herokuapp.com/articles")
+    .then(item => {
+      const articles = item.data.articles;
+      for(const art in articles){
+        console.log(articles[art]);
+        articles[art].forEach(y => main.appendChild(Card(y)))
+      }
+        })
+    .catch(err => console.log(err))
 }
 
 export { Card, cardAppender }
