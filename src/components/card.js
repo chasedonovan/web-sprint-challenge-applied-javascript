@@ -63,7 +63,7 @@ const cardAppender = (selector) => {
   // Append each card to the element in the DOM that matches the selector passed to the function.
   //
 
-
+  
   // get the object
   const main = document.querySelector(selector);
   // get the data 
